@@ -1,0 +1,6 @@
+{"错误网页": "http://www.fn.com/depth/12711.html", "错误原因": "list index out of range"}
+{"错误网页": "http://www.fn.com/lives/26212.html", "错误原因": "Type 'list' cannot be serialized."}
+{"错误网页": "http://www.fn.com/news/25941.html", "错误原因": "Type 'list' cannot be serialized."}
+{"错误网页": "http://www.fn.com/news/25941.html", "错误原因": "list indices must be integers or slices, not str"}
+{"错误网页": "http://www.fn.com/news/19998.html", "错误原因": "list indices must be integers or slices, not str"}
+{"错误网页": "http://www.fn.com/news/26086.html", "错误原因": "list index out of range"}

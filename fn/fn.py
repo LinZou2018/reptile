@@ -85,10 +85,10 @@ def read_content(urls):
             n += 1
 
 
-def starts(headers):
+def starts():
     # 从首页开始查询网址
     url = "http://www.fn.com/"
-    reponse = requests.get(url, headers=headers)
+    reponse = requests.get(url, headers=headers.header())
     reponse.encoding = "utf-8"
     html = reponse.text
     # 获取首页所有的新闻网址
@@ -102,6 +102,6 @@ def starts(headers):
 
 
 if __name__ == "__main__":
-    starts(headers.header())
+    starts()
 
 

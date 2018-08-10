@@ -21,6 +21,7 @@ def storage(title, author, subhead, time, source, text, number):
 
 def download(html, url):
     try:
+        print("huoxing24")
         # 获取编号
         pattern_num = re.compile('\d+')
         number = re.findall(pattern_num, url)[1]
@@ -65,30 +66,33 @@ def download(html, url):
 
 
 def starts():
-    # 从主页查找新闻信息
     url = "http://www.huoxing24.com/"
-    reponse = requests.get(url, headers=header())
-    reponse.encoding = "utf-8"
-    html = reponse.text
-    pattern = re.compile('<div class="index-news-list">[\s\S]*?<div class="shadow">')
-    texts = re.findall(pattern, html)
-    # print(texts)
-    n = 1
-    for text in texts:
-        # print(n)
-        n += 1
-        # 进行遍历，加载新闻网址
-        pattern = re.compile('[a-zA-z]+://[^\s]*\.html')
-        url = re.findall(pattern, text)[0]
+    try:
+        # 从主页查找新闻信息
         reponse = requests.get(url, headers=header())
         reponse.encoding = "utf-8"
-        # 判断网址能否加载
-        if reponse.status_code == 200:
-            html = reponse.text
-            download(html, url)
-        else:
-            err = "reponse.status_code为:" + reponse.status_code
-            mistake(url, err)
+        html = reponse.text
+        pattern = re.compile('<div class="index-news-list">[\s\S]*?<div class="shadow">')
+        texts = re.findall(pattern, html)
+        # print(texts)
+        n = 1
+        for text in texts:
+            # print(n)
+            n += 1
+            # 进行遍历，加载新闻网址
+            pattern = re.compile('[a-zA-z]+://[^\s]*\.html')
+            url = re.findall(pattern, text)[0]
+            reponse = requests.get(url, headers=header())
+            reponse.encoding = "utf-8"
+            # 判断网址能否加载
+            if reponse.status_code == 200:
+                html = reponse.text
+                download(html, url)
+            else:
+                err = reponse.status_code
+                mistake(url, err)
+    except Exception as err:
+        mistake(url, err)
 
 if __name__ == "__main__":
     starts()

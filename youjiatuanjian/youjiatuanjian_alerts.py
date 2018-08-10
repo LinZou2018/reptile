@@ -20,6 +20,7 @@ def storage(title, author, time, source, mains, number):
 
 def downloadOneMessage(text, time, url, number):
     try:
+        print("youjiatuanjian_alerts")
         # 精确时间
         mains = etree.tostring(text, method="text", encoding="utf8").decode("utf8").split()
         time = time + "--" + mains[0]
@@ -45,7 +46,7 @@ def download(url, html):
         texts = html.xpath('//*[@id="view"]/li')
         n = 1
         for text in texts:
-            # 获取没条快讯的唯一编号
+            # 获取每条快讯的唯一编号
             num = html.xpath('//*[@id="view"]/li[%s]/a/div[1]/div[2]/@onclick' % n)
             pattern = re.compile('\d+')
             number = re.findall(pattern, num[0])[0]

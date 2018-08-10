@@ -23,6 +23,7 @@ def storage(number, title, author, timeout, source, mains):
 
 def download(html, number, url):
     try:
+        print("youjiatuanjian")
         # 获取标题
         title = html.xpath('//*[@id="article-wrap"]/div/div[1]/div[1]/text()')[0]
         # 获取信息来源
@@ -65,9 +66,13 @@ def starts():
     url = "http://youjiatuanjian.com/"
     reponse = requests.get(url, headers=headers.header())
     reponse.encoding = "utf-8"
-    html = etree.HTML(reponse.text)
-    news = html.xpath('//*[@id="view"]/li/a/@href')
-    getUrl(news)
+    if reponse.status_code == 200:
+        html = etree.HTML(reponse.text)
+        news = html.xpath('//*[@id="view"]/li/a/@href')
+        getUrl(news)
+    else:
+        err = reponse.status_code
+        mistake(url, err)
 
 
 if __name__ == '__main__':

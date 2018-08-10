@@ -20,6 +20,7 @@ def storage(number, title, author, time, source, text):
 
 def download(reponse_branch, url, branch):
     try:
+        print("hecaijiing")
         # 获取编号
         pattern = re.compile('\d+')
         number = re.findall(pattern, url)[0]

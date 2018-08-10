@@ -18,6 +18,7 @@ def storage(title, time, source, main):
 
 
 def download(url):
+    print("huoxing24_alerts")
     reponse = requests.get(url, headers = header())
     reponse.encoding = "utf-8"
     if reponse.status_code == 200:

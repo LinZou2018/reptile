@@ -29,6 +29,7 @@ def storage(title, authors, times, source, main, number, subtitle):
 
 def download(url, html):
     try:
+        print("fn")
         # 筛选数据
         # 新闻的编号
         pattern_num = re.compile('\d+')
@@ -70,15 +71,18 @@ def read_content(urls):
             reponse = requests.get(url, headers=headers.header())
             reponse.encoding = "utf-8"
             if reponse.status_code == 200:
-                html = reponse.text
-                download(url, html)
-                # 匹配上一篇新闻的url
-                pattern = re.compile('<a href="[a-zA-z]+://www.fn.com[^\s]*\.html" t[\s\S]*?&laquo; 上一篇')
-                texts = re.findall(pattern, html)[0]
-                pattern = re.compile('[a-zA-z]+://www.fn.com[^\s]*\.html')
-                url = re.findall(pattern, texts)[0]
+                try:
+                    html = reponse.text
+                    download(url, html)
+                    # 匹配上一篇新闻的url
+                    pattern = re.compile('<a href="[a-zA-z]+://www.fn.com[^\s]*\.html" t[\s\S]*?&laquo; 上一篇')
+                    texts = re.findall(pattern, html)[0]
+                    pattern = re.compile('[a-zA-z]+://www.fn.com[^\s]*\.html')
+                    url = re.findall(pattern, texts)[0]
+                except Exception as err:
+                    mistake(url, err)
             else:
-                err = "reponse.status_code为:" + reponse.status_code
+                err = reponse.status_code
                 mistake(url, err)
                 # print("结束")
                 break
@@ -90,15 +94,19 @@ def starts():
     url = "http://www.fn.com/"
     reponse = requests.get(url, headers=headers.header())
     reponse.encoding = "utf-8"
-    html = reponse.text
-    # 获取首页所有的新闻网址
-    pattern = re.compile('[a-zA-z]+://www.fn.com/news/[^\s]*\.html')
-    urls_news = re.findall(pattern, html)
-    pattern = re.compile('[a-zA-z]+://www.fn.com/dapth/[^\s]*\.html')
-    urls_dapth = re.findall(pattern, html)
-    urls = list(set(urls_news + urls_dapth))
-    # print(urls)
-    read_content(urls)
+    if reponse.status_code == 200:
+        html = reponse.text
+        # 获取首页所有的新闻网址
+        pattern = re.compile('[a-zA-z]+://www.fn.com/news/[^\s]*\.html')
+        urls_news = re.findall(pattern, html)
+        pattern = re.compile('[a-zA-z]+://www.fn.com/dapth/[^\s]*\.html')
+        urls_dapth = re.findall(pattern, html)
+        urls = list(set(urls_news + urls_dapth))
+        # print(urls)
+        read_content(urls)
+    else:
+        err = reponse.status_code
+        mistake(url, err)
 
 
 if __name__ == "__main__":

@@ -23,6 +23,7 @@ def storage(number, title, timeout, source, mains):
 
 def download(html, time, n, text):
     try:
+        print("fn_alerts")
         # 获取编号
         source_url = html.xpath('//*[@id="wrap"]/div/div/div/div[2]/div[%s]/div[1]/h2/a/@href' % n)[0]
         pattern_num = re.compile('\d+')
@@ -62,8 +63,12 @@ def starts():
     reponse = requests.get(url, headers=headers.header())
     reponse.encoding = "utf-8"
     html = reponse.text
-    # 获取首页所有的新闻网址
-    getUrl(url, html)
+    if reponse.status_code == 200:
+        # 获取首页所有的新闻网址
+        getUrl(url, html)
+    else:
+        err = reponse.status_code
+        mistake(url, err)
 
 if __name__ == "__main__":
     starts()

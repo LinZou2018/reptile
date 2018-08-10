@@ -24,6 +24,7 @@ def storage(number, title, timeout, main_texts, source):
 def download(urls):
     for url_one in urls:
         try:
+            print("hecaijing_alerts")
             url = "https://www.hecaijing.com" + url_one
             reponse = requests.get(url, headers=headers.header())
             reponse.encoding = "utf-8"

@@ -19,11 +19,23 @@ listHeaders = [
     {"User-Agent":"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; 360SE)"},
     {"User-Agent":"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Avant Browser)"},
     ]
+#
+# for headers in listHeaders:
+#     url = 'http://www.fn.com/lives'
+#     reponse = requests.get(url, headers)
+#     reponse.encoding = "utf-8"
+#     html = etree.HTML(reponse.text)
+#     down = html.xpath('//*[@id="wrap"]/div/div/div/div[2]/div[5]/div[1]/h2/a/@href')
+#     print(down)
 
-for headers in listHeaders:
-    url = 'http://www.fn.com/lives'
-    reponse = requests.get(url, headers)
-    reponse.encoding = "utf-8"
-    html = etree.HTML(reponse.text)
-    down = html.xpath('//*[@id="wrap"]/div/div/div/div[2]/div[5]/div[1]/h2/a/@href')
-    print(down)
+str = '''<div class="new_info_title">
+                            <p class="new_info_h1">南非当局拟对加密货币征税，民间社群表示欢迎——征税体现当局对加密货币的接纳</p>
+                            <p class="new_info_p cl"><i class="icon icon-time"></i>2018-08-09 17:59:24<span>
+                                     
+                                        来源：币报道                                </span></p>
+
+                        </div>'''
+
+p = re.compile('(>)([\s\S]*?)(<)')
+m = re.findall(p, str)
+print(m)

@@ -58,7 +58,7 @@ def download(reponse, url):
         for findOne in data:
             number = findOne["id"]
             if rechecking(number, "btc123_alerts"):
-                break
+                return True
             # 获取更精确的时间
             timeout = findOne["createText"]
             release_time = UTCTime(timeout)
@@ -76,7 +76,9 @@ def starts():
             reponse.encoding = "utf-8"
             # 判断网页是否加载完成
             if reponse.status_code == 200:
-                download(reponse, url)
+                data = download(reponse, url)
+                if data:
+                    break
                 n += 1
             else:
                 err = reponse.status_code

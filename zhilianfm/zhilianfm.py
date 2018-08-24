@@ -83,9 +83,9 @@ def starts():
             if data:
                 break
             number -= 1
-    # else:
-    #     err = reponse.status_code
-    #     mistake(url, err)
+    else:
+        err = reponse.status_code
+        mistake(url, err)
 
 
 

@@ -25,8 +25,18 @@ def download(reponse):
 
 
 def starts():
+    n = 1
+    payload = {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "index",
+        "params": [{
+            "page": 1,
+            "page_size": 8,
+            "type": ""}]
+    }
     url = "https://www.xinbinews.com/cms/information.php?c=index"
-    reponse = requests.post(url, headers=headers)
+    reponse = requests.post(url, headers=headers, data=payload)
     reponse.encoding = "utf-8"
     if reponse.status_code == 200:
         download(reponse)

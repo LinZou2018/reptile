@@ -39,3 +39,54 @@ str = '''<div class="new_info_title">
 p = re.compile('(>)([\s\S]*?)(<)')
 m = re.findall(p, str)
 print(m)
+
+
+headers = {
+    "Accept": "application/json, text/javascript, */*; q=0.01",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept-Language": "zh-CN,zh;q=0.9",
+    "Content-Length": "5",
+    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+    "Cookie": "Hm_lvt_554c268f4979cd8ffd030cc4507df8c4=1534475117; JSESSIONID=740F887EE08A0DDF0A2C713EBD6F432E; Hm_lpvt_554c268f4979cd8ffd030cc4507df8c4=1534484238",
+    "Host": "bishequ.com",
+    "Origin": "http://bishequ.com",
+    "Proxy-Connection": "keep-alive",
+    "Referer": "http://bishequ.com/exchangelist",
+    "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
+    "X-Requested-With": "XMLHttpRequest",
+}
+
+
+
+def UTCTime(timeout):
+    # 判断时间是多久之前的
+    pattern = re.compile("天")
+    day = re.findall(pattern, timeout)
+    pattern = re.compile("时")
+    hour = re.findall(pattern, timeout)
+    pattern = re.compile("分")
+    minute = re.findall(pattern, timeout)
+    pattern = re.compile("刚")
+    nows = re.findall(pattern, timeout)
+    pattern = re.compile("\d+")
+    num = re.findall(pattern, timeout)[0]
+    # 获取当前时间
+    nowTheTime = int(time.time())
+    # 计算新闻的发布的时间
+    if len(day):
+        marjin = int(num) * 24 * 60 * 60
+        releaseTime = nowTheTime - marjin
+        return time.asctime(time.localtime(releaseTime))
+    elif len(hour):
+        marjin = int(num) * 60 * 60
+        releaseTime = nowTheTime - marjin
+        return time.asctime(time.localtime(releaseTime))
+    elif len(minute):
+        marjin = int(num) * 60
+        releaseTime = nowTheTime - marjin
+        return time.asctime(time.localtime(releaseTime))
+    elif len(nows):
+        return time.asctime(time.localtime(time.time()))
+    else:
+        # 如果是精确的时间就返回此时间
+        return timeout
